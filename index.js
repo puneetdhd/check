@@ -37,9 +37,9 @@ app.get("/",(req,res)=>{
 //index is working
 
 app.get("/chats",async(req,res)=>{
-    let chats= await chats.find();
+    let chats= await chat.find();
     console.log(chats);
-    res.render ("chats.ejs");
+    res.render ("chats.ejs",{ chats });
 
 });
 
@@ -59,6 +59,6 @@ chat1.save().then((res)=>{
     console.log(res);
 });
 
-app.listen(4000,()=>{
+app.listen(3000,()=>{
     console.log("server is listening on port 3000");
 })
