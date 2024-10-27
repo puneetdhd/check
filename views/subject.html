@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Educational Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <!-- AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  </head>
+  <body class="bg-gray-50 min-h-screen">
+    <header class="visible sticky top-0 z-50" id="home-header">
+      <nav class="flex justify-between items-center p-4">
+        <div class="relative flex items-center justify-center">
+          <a href="index.html#home">
+            <h4
+              id="header-logo"
+              class="relative ml-4 text-purple-700 text-4xl font-bold tracking-wider"
+            >
+              EduPulse
+            </h4>
+          </a>
+        </div>
+        <a
+          href="index.html#home"
+          class="flex items-center px-4 py-2 text-gray-800 hover:text-purple-700 font-bold"
+        >
+          Home
+        </a>
+      </nav>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <!-- Department Dropdown -->
+        <div class="relative">
+          <select
+            id="department-input"
+            class="w-full bg-white border border-gray-300 rounded-lg p-4 shadow-md appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+          >
+            <option value="">Select Department</option>
+            <option value="CSE">Computer Science Engineering</option>
+            <option value="IT">Information Technology</option>
+            <option value="ME">Mechanical Engineering</option>
+            <option value="AIR">AI & Robotics</option>
+            <option value="EE">Electrical Engineering</option>
+            <option value="EnI">Electrical & Instrumentation</option>
+            <option value="CE">Civil Engineering</option>
+            <option value="BT">Biotechnology</option>
+            <option value="MnC">Mathematics and Computing</option>
+            <option value="Phy">Physics</option>
+            <option value="Chem">Chemistry</option>
+          </select>
+        </div>
+
+        <!-- Semester Dropdown -->
+        <div class="relative">
+          <select
+            id="semester-input"
+            class="w-full bg-white border border-gray-300 rounded-lg p-4 shadow-md appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+          >
+            <option value="">Select Semester</option>
+            <option value="First">First</option>
+            <option value="Second">Second</option>
+            <option value="Third">Third</option>
+            <option value="Fourth">Fourth</option>
+            <option value="Fifth">Fifth</option>
+            <option value="Sixth">Sixth</option>
+            <option value="Seventh">Seventh</option>
+            <option value="Eighth">Eighth</option>
+          </select>
+        </div>
+
+        <!-- Subject input -->
+        <div class="relative">
+          <input
+            id="subject-input"
+            type="text"
+            placeholder="Subject or Course Code"
+            class="w-full bg-white border border-gray-300 rounded-lg p-4 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+      </div>
+
+      <div
+        id="subject-cards"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 place-items-center"
+      >
+        <!-- Subject cards will be dynamically inserted here -->
+      </div>
+    </main>
+
+    <script>
+      const subjects = [
+        {
+          id: 1,
+          title: "Mathematics 1",
+          code: "MATH101",
+          department: ["CSE", "IT", "ME", "EE", "EnI", "AIR", "CE", "BT"],
+          semester: "First",
+          image:
+            "https://drive.google.com/thumbnail?id=1ULNMrR8dId6qIAoE1sdZWny9xMwqNl71&sz=w1026-h1026",
+          notes:
+            "https://drive.google.com/file/d/1p7hq2SIG-JT97MVqIgkb5yRJ0GEmF-Zy/view?usp=drive_link",
+          syllabus:
+            "https://drive.google.com/file/d/1nTjqLIYNqLsQN9lr2OZ2Do1PMPpgrWSK/view?usp=drive_link",
+          pyq: "https://drive.google.com/file/d/1x-LmDLmk2Ir8701vUwgpw-6qWc3CuKSd/view?usp=drive_link",
+          resource:
+            "https://drive.google.com/drive/folders/1yfPoWVRUh62vfSMh1pNaPI6AYM7weEhk?usp=drive_link",
+          paragraph: "lorem30",
+        },
+        {
+          id: 2,
+          title: "Mathematics 2",
+          code: "MATH102",
+          department: ["CSE", "IT", "ME", "EE", "EnI", "AIR", "CE", "BT"],
+          semester: "Second",
+          image:
+            "https://drive.google.com/thumbnail?id=1ULNMrR8dId6qIAoE1sdZWny9xMwqNl71&sz=w1026-h1026",
+          notes:
+            "https://drive.google.com/file/d/1MzknvV5Qe-BrJmek4b3BFVDTxhOSnfwu/view?usp=drive_link",
+          syllabus:
+            "https://drive.google.com/file/d/1JPZh8cldP8h6-viqjZF5NR3rBLAr24_7/view?usp=drive_link",
+          pyq: "https://drive.google.com/file/d/1x-LmDLmk2Ir8701vUwgpw-6qWc3CuKSd/view?usp=drive_link",
+          resource:
+            "https://drive.google.com/drive/folders/1BRxl43N8I2vQYmKhPbW80vgWQhtvjxib?usp=drive_link",
+          paragraph: "lorem30",
+        },
+        {
+          id: 3,
+          title: "Mathematics 3",
+          code: "MATH103",
+          department: ["CSE", "IT", "ME", "EE", "EnI", "AIR", "CE", "BT"],
+          semester: "Third",
+          image:
+            "https://drive.google.com/thumbnail?id=1ULNMrR8dId6qIAoE1sdZWny9xMwqNl71&sz=w1026-h1026",
+          notes:
+            "https://drive.google.com/file/d/132gKizdWGlPJpBAWiAxocmi2nFzRoXCM/view?usp=drive_link",
+          syllabus:
+            "https://drive.google.com/file/d/10yPFkL359TSS8AxJpiNjdosRxlz-IjIF/view?usp=drive_link",
+          pyq: "",
+          resource:
+            "https://drive.google.com/drive/folders/1Dd_f_oSKq2HIGqlFBfPN3nEAGKQmCO2U?usp=drive_link",
+          paragraph: "lorem30",
+        },
+        {
+          id: 4,
+          title: "Discrete Mathematics",
+          code: "MATH104",
+          department: ["CSE", "IT", "ME", "EE", "EnI", "AIR", "CE", "BT"],
+          semester: "Fourth",
+          image:
+            "https://drive.google.com/thumbnail?id=1ULNMrR8dId6qIAoE1sdZWny9xMwqNl71&sz=w1026-h1026",
+          notes:
+            "https://drive.google.com/file/d/1p7hq2SIG-JT97MVqIgkb5yRJ0GEmF-Zy/view?usp=drive_link",
+          syllabus:
+            "https://drive.google.com/file/d/1nTjqLIYNqLsQN9lr2OZ2Do1PMPpgrWSK/view?usp=drive_link",
+          pyq: "https://drive.google.com/file/d/1x-LmDLmk2Ir8701vUwgpw-6qWc3CuKSd/view?usp=drive_link",
+          resource: "",
+          paragraph: "lorem30",
+        },
+        {
+          id: 5,
+          title: "Chemistry",
+          code: "CHEM101",
+          department: ["CSE", "IT", "ME", "EE", "EnI", "AIR", "CE", "BT"],
+          semester: "First",
+          image:
+            "https://drive.google.com/thumbnail?id=1sk1h1GbF_jkLEbrfc8NZvNIZGnd0qswl&sz=w1026-h1026",
+          notes:
+            "https://docs.google.com/presentation/d/1VXTs9s-Xqqhp-olWTD5JMVk0p1CE0PrX/edit?usp=drive_link&ouid=115541983784796554622&rtpof=true&sd=true",
+          syllabus:
+            "https://drive.google.com/file/d/1nTjqLIYNqLsQN9lr2OZ2Do1PMPpgrWSK/view?usp=drive_link",
+          pyq: "",
+          resource:
+            "https://drive.google.com/drive/folders/1Vj_wxzxoBnSsyKPgJ1fHA4ErhDtm0klB?usp=drive_link",
+          paragraph: "lorem30",
+        },
+        {
+          id: 6,
+          title: "Physics",
+          code: "PHY101",
+          department: ["CSE", "IT", "ME", "EE", "EnI", "AIR", "CE", "BT"],
+          semester: "Second",
+          image:
+            "https://drive.google.com/thumbnail?id=1pj5Hdv4jLll59FhpDoZCR2h_0rOTVb41&sz=w1026-h1026",
+          notes: "",
+          syllabus:
+            "https://drive.google.com/file/d/1nTjqLIYNqLsQN9lr2OZ2Do1PMPpgrWSK/view?usp=drive_link",
+          pyq: "https://drive.google.com/file/d/1x-LmDLmk2Ir8701vUwgpw-6qWc3CuKSd/view?usp=drive_link",
+          resource:
+            "https://drive.google.com/drive/folders/1RfTT3TssT8EyE04-kBrOOmYCrbVQLei8?usp=drive_link",
+          paragraph: "lorem30",
+        },
+        {
+          id: 7,
+          title: "Engineering Economics",
+          code: "EE101",
+          department: [
+            "CSE",
+            "IT",
+            "ME",
+            "EE",
+            "EnI",
+            "AIR",
+            "CE",
+            "BT",
+            "MnC",
+            "Phy",
+            "Chem",
+          ],
+          semester: "Third",
+          image:
+            "https://drive.google.com/thumbnail?id=1sk1h1GbF_jkLEbrfc8NZvNIZGnd0qswl&sz=w1026-h1026",
+          notes:
+            "https://drive.google.com/file/d/14dSuSAqKwMv9ZP_bm_5bWar_bsIRG_xX/view?usp=drive_link",
+          syllabus:
+            "https://drive.google.com/file/d/10XmbFZ3yX9gnyUzh7Fme4o95BIM5fvYE/view?usp=drive_link",
+          pyq: "",
+          resource:
+            "https://drive.google.com/drive/folders/1zGo0whR-7icioRtLI8fWXBCPrgOKGnt_?usp=drive_link",
+          paragraph: "lorem30",
+        },
+        {
+          id: 8,
+          title: "Digital Electronics",
+          code: "DE101",
+          department: ["EnI"],
+          semester: "Third",
+          image:
+            "https://drive.google.com/thumbnail?id=1eR_hkcznl8KCAWKROkkQPLPjv33fDgqy&sz=w1026-h1026",
+          notes: "",
+          syllabus: "",
+          pyq: "",
+          resource: "",
+        },
+        {
+          id: 9,
+          title: "Object Oriented Programming",
+          code: "OP101",
+          department: ["CSE", "IT"],
+          semester: "Third",
+          image:
+            "https://drive.google.com/thumbnail?id=1173czQpnNpvCBiDiY9OavsHBsNz1ikaZ&sz=w1026-h1026",
+          notes:
+            "https://drive.google.com/file/d/1HqsyxSzeBILJmTdh2tV1uEf4eH3hkD9A/view?usp=drive_link",
+          syllabus: "",
+          pyq: "https://drive.google.com/file/d/1LNi4OgoZSCQo2967Jk4cVFWpXcXo9qeK/view?usp=drive_link",
+          resource:
+            "https://drive.google.com/drive/folders/18p5Vnt-99V3vhJuEHHmZbcUMmP9gerKv?usp=drive_link",
+          paragraph: "lorem30",
+        },
+        {
+          id: 10,
+          title: "Advanced Computer Architecture",
+          code: "ACA101",
+          department: ["CSE"],
+          semester: "Fifth",
+          image:
+            "https://drive.google.com/thumbnail?id=1h-60VohNUzNr-qm2F2V06NASlpIHm4Ry&sz=w1026-h1026",
+          notes:
+            "https://drive.google.com/drive/folders/1P9_B-YUd41FHFMd64SzVJ2FTGM9adntP?usp=drive_link",
+          syllabus: "",
+          pyq: "",
+          resource:
+            "https://drive.google.com/drive/folders/1P9_B-YUd41FHFMd64SzVJ2FTGM9adntP?usp=drive_link",
+          paragraph: "lorem30",
+        },
+        {
+          id: 11,
+          title: "Real Time System",
+          code: "RTS101",
+          department: ["CSE"],
+          semester: "Fifth",
+          image:
+            "https://drive.google.com/thumbnail?id=1feU2yMs5KxrH28ToGs50_gildK8paqlU&sz=w1026-h1026",
+          notes:
+            "https://drive.google.com/file/d/1e2xSXVZJPf3gBf2EkQlWmM07e7f3SKTa/view?usp=drive_link",
+          syllabus: "",
+          pyq: "",
+          resource:
+            "https://drive.google.com/drive/folders/1PEm0Hl8n8tNbnPXVFbE8cT-P47xMLwmb?usp=drive_link",
+          paragraph: "lorem30",
+        },
+        {
+          id: 12,
+          title: "Artificial Intelligence",
+          code: "AI101",
+          department: ["CSE"],
+          semester: "Fifth",
+          image:
+            "https://drive.google.com/thumbnail?id=1dgeWY5wEpA8M5oK5cor6BkzEUoge-sGa&sz=w1026-h1026",
+          notes:
+            "https://drive.google.com/drive/folders/1P4J3C3vq2sWH8ePwM5xzlBSDO-_CrE4I?usp=drive_link",
+          syllabus: "",
+          pyq: "",
+          resource:
+            "https://drive.google.com/drive/folders/1P4J3C3vq2sWH8ePwM5xzlBSDO-_CrE4I?usp=drive_link",
+          paragraph: "lorem30",
+        },
+        {
+          id: 13,
+          title: "Computer Networks",
+          code: "CN101",
+          department: ["CSE"],
+          semester: "Fifth",
+          image:
+            "https://drive.google.com/thumbnail?id=16FbIY4j9RkWsemjrYf3GuNQT6ES8CZAN&sz=w1026-h1026",
+          notes:
+            "https://drive.google.com/drive/folders/1PKdl9T3x8oIzmgZsQvi9RpAEdPMXUFpj?usp=drive_link",
+          syllabus: "",
+          pyq: "",
+          resource:
+            "https://drive.google.com/drive/folders/1PKdl9T3x8oIzmgZsQvi9RpAEdPMXUFpj?usp=drive_link",
+          paragraph: "lorem30",
+        },
+        {
+          id: 14,
+          title: "Database Management System",
+          code: "DB101",
+          department: ["CSE"],
+          semester: "Fifth",
+          image:
+            "https://drive.google.com/thumbnail?id=108T5rQhGoJigmAbT6v-dLUpmsQeiLZsK&sz=w1026-h1026",
+          notes:
+            "https://drive.google.com/file/d/1qrxuPX_7dJ_vED6hTKYivN6ro3xEdRgK/view?usp=drive_link",
+          syllabus: "",
+          pyq: "",
+          resource:
+            "https://drive.google.com/drive/folders/1OzNKhyDEDM7DnmSSRnToxYq1Bs5SU_5w?usp=drive_link",
+          paragraph: "lorem30",
+        },
+        {
+          id: 15,
+          title: "Internet and Web Technology",
+          code: "IWT101",
+          department: ["CSE", "IT"],
+          semester: "Sixth",
+          image:
+            "https://drive.google.com/thumbnail?id=1lNFt7f_oIZwePKRwKWk_cslgopa9z4Eg&sz=w1026-h1026",
+          notes:
+            "https://drive.google.com/drive/folders/1PAZC_Ltm1uq8vhVPEF2437-ne5fvJvUu?usp=drive_link",
+          syllabus: "",
+          pyq: "",
+          resource:
+            "https://drive.google.com/drive/folders/1PAZC_Ltm1uq8vhVPEF2437-ne5fvJvUu?usp=drive_link",
+          paragraph: "lorem30",
+        },
+        {
+          id: 16,
+          title: "Algorithm Analysis and Design",
+          code: "IWT101",
+          department: ["CSE", "IT"],
+          semester: "Third",
+          image:
+            "https://drive.google.com/thumbnail?id=1k_MLH2RGtHsg-uBv76JKltN5UVZ4uTlm&sz=w1026-h1026",
+          notes:
+            "https://drive.google.com/file/d/17MudWxomyz0ptbPZJhlfnvACrHFQOs7b/view?usp=drive_link",
+          syllabus: "",
+          pyq: "https://drive.google.com/file/d/1YL_bgfXx0muQt4VhJFPCfMMTpsi49j89/view?usp=drive_link",
+          resource:
+            "https://drive.google.com/drive/folders/16dIKTbDvjpjicXG1T0BZtgvFrYm8CV6Q?usp=drive_link",
+          paragraph: "lorem30",
+        },
+        {
+          id: 17,
+          title: "Machine Learning",
+          code: "ML101",
+          department: ["CSE", "IT"],
+          semester: "Seventh",
+          image:
+            "https://drive.google.com/thumbnail?id=1wViV0GEvZWL35FK2RYMU2wogElTLYu1Q&sz=w1026-h1026",
+          notes:
+            "https://drive.google.com/file/d/1-9wcPLkTwqeP2s_DC8BNuBjpv4EqvYda/view?usp=drive_link",
+          syllabus: "",
+          pyq: "",
+          resource:
+            "https://drive.google.com/drive/folders/1-9vHXaJOwko0MaPJPBkDDuK74RKAN4q2?usp=drive_link",
+          paragraph: "lorem30",
+        },
+        {
+          id: 18,
+          title: "Human Computer Interaction",
+          code: "HCI101",
+          department: ["CSE", "IT"],
+          semester: "Sixth",
+          image:
+            "https://drive.google.com/thumbnail?id=10p9uDeIToVamHjNxe0sMVs8szZvNM9cm&sz=w1026-h1026",
+          notes:
+            "https://drive.google.com/file/d/1b70amVYpGOg7-RLVsgqAUJY4XH063Wfk/view?usp=drive_link",
+          syllabus: "",
+          pyq: "https://drive.google.com/drive/folders/10L7Txx9gQVP2WMxW-TvwWUFpCCyYq2gR?usp=drive_link",
+          resource:
+            "https://drive.google.com/drive/folders/1vlURyvp9gszfS0nDl42-om-of_cdPysA?usp=drive_link",
+          paragraph: "lorem30",
+        },
+        {
+          id: 19,
+          title: "Software Engineering",
+          code: "SE101",
+          department: ["CSE", "IT"],
+          semester: "Fifth",
+          image:
+            "https://drive.google.com/thumbnail?id=1byiVJlIUIEpUHObFSth5WhhoI6ZYpMll&sz=w1026-h1026",
+          notes:
+            "https://drive.google.com/file/d/1bHM9oKEbVPrXx8PnGRMRJ9R8D4OpJQFP/view?usp=drive_link",
+          syllabus: "",
+          pyq: "https://drive.google.com/drive/folders/10L7Txx9gQVP2WMxW-TvwWUFpCCyYq2gR?usp=drive_link",
+          paragraph: "lorem30",
+          resource: "",
+        },
+        {
+          id: 20,
+          title: "Computer Graphics",
+          code: "CG101",
+          department: ["CSE", "IT"],
+          semester: "Sixth",
+          image:
+            "https://drive.google.com/thumbnail?id=1fMLq5AV7Gh_V9ei_qrj5LK6cmQCa_NHk&sz=w1026-h1026",
+          notes:
+            "https://drive.google.com/file/d/1bAS5PaFgVIQtGwy7pTmRxLHMrzSURvql/view?usp=drive_link",
+          syllabus: "",
+          pyq: "https://drive.google.com/drive/folders/10L7Txx9gQVP2WMxW-TvwWUFpCCyYq2gR?usp=drive_link",
+          resource:
+            "https://drive.google.com/drive/folders/1MAoB6V-VV54C_oBv6aDpoVfY1oXbrb3Q?usp=drive_link",
+          paragraph: "lorem30",
+        },
+        {
+          id: 21,
+          title: "Data Mining",
+          code: "DM101",
+          department: ["CSE", "IT"],
+          semester: "Sixth",
+          image:
+            "https://drive.google.com/thumbnail?id=10te5bNW4gx0Y6UwlfOM6ig05v8hXdOq2&sz=w1026-h1026",
+          notes:
+            "https://drive.google.com/file/d/1b66RoiYQ1-MUIbksKEldJsEVvBtPQ_k_/view?usp=drive_link",
+          syllabus: "",
+          pyq: "https://drive.google.com/drive/folders/10L7Txx9gQVP2WMxW-TvwWUFpCCyYq2gR?usp=drive_link",
+          resource:
+            "https://drive.google.com/drive/folders/1qC4YHGfnglHWdxvm8IRvbV73m8K6Ic-T?usp=drive_link",
+          paragraph: "lorem30",
+        },
+        {
+          id: 22,
+          title: "Enterpreneurship Development",
+          code: "ED101",
+          department: ["CSE", "IT"],
+          semester: "Fifth",
+          image:
+            "https://drive.google.com/thumbnail?id=1qbGbBkXmpxdTJ6BHyKBgnNKmhwT6GQpS&sz=w1026-h1026",
+          notes:
+            "https://drive.google.com/file/d/1KTdai6ek_z19_G9YJOVChcIbJq6i-JUs/view?usp=drive_link",
+          syllabus: "",
+          pyq: "",
+          resource:
+            "https://drive.google.com/drive/folders/1o9jgBgr_Z7kTBFj9eJeF4LeE_chtr5iX?usp=drive_link",
+          paragraph: "lorem30",
+        },
+        {
+          id: 23,
+          title: "Computer Organisation and Architecture",
+          code: "COA101",
+          department: ["CSE", "IT"],
+          semester: "Fourth",
+          image:
+            "https://drive.google.com/thumbnail?id=1TkMqwdZ_rWJKr99uihyAMSFjRyQz_0Ea&sz=w1026-h1026",
+          notes:
+            "https://drive.google.com/file/d/1gImdVyA6yHLdjMoRIh8oeLNdVJJYw4d3/view?usp=drive_link",
+          syllabus: "",
+          pyq: "",
+          resource: "",
+          paragraph: "lorem30",
+        },
+        {
+          id: 24,
+          title: "EFTW",
+          code: "EF101",
+          department: [
+            "CSE",
+            "IT",
+            "ME",
+            "BT",
+            "EE",
+            "EnI",
+            "AIR",
+            "MnC",
+            "PHY",
+            "CHEM",
+            "CE",
+          ],
+          semester: "First",
+          image:
+            "https://drive.google.com/thumbnail?id=1r534XB-di9YLWMifErhVZzei2_14m9lX",
+          notes:
+            "https://drive.google.com/file/d/1t0aAkMF0a6AYe8d9d50Njh7cZs5sQX-6/view?usp=drive_link",
+          syllabus: "",
+          pyq: "",
+          resource: "",
+          paragraph: "lorem30",
+        },
+        {
+          id: 26,
+          title: "BEE",
+          code: "EE101",
+          department: [
+            "CSE",
+            "IT",
+            "ME",
+            "BT",
+            "EE",
+            "EnI",
+            "AIR",
+            "MnC",
+            "PHY",
+            "CHEM",
+            "CE",
+          ],
+          semester: ["First", "Second"],
+          image:
+            "https://drive.google.com/thumbnail?id=1n-FGuP2pIkut6HOwJWbiE9IWzm_o6oZX",
+          notes:
+            "https://drive.google.com/file/d/17qwVmhBTwA7awVI8jYxa4zfCmFWl18HU/view?usp=sharing",
+          syllabus: "",
+          pyq: "",
+          resource: "",
+          paragraph: "lorem30",
+        },
+        {
+          id: 26,
+          title: "BEE Part 2",
+          code: "EE101",
+          department: [
+            "CSE",
+            "IT",
+            "ME",
+            "BT",
+            "EE",
+            "EnI",
+            "AIR",
+            "MnC",
+            "PHY",
+            "CHEM",
+            "CE",
+          ],
+          semester: ["First", "Second"],
+          image:
+            "https://drive.google.com/thumbnail?id=1n-FGuP2pIkut6HOwJWbiE9IWzm_o6oZX",
+          notes:
+            "https://drive.google.com/file/d/1qQGcJQhY5rhL97oO2NMHEL_2Ip-vrYed/view?usp=sharing",
+          syllabus: "",
+          pyq: "",
+          resource: "",
+          paragraph: "lorem30",
+        },
+        {
+          id: 30,
+          title: "DAI",
+          code: "DA101",
+          department: ["CSE", "IT"],
+          semester: ["Third"],
+          image:
+            "https://drive.google.com/thumbnail?id=1oZoeToVvoflM9lH6Xpee8m0i09NMchoV",
+          notes:
+            "https://drive.google.com/file/d/1OK4WL8EA1L6Tm0JBd7lpbaX8JjiQWgKI/view?usp=sharing",
+          syllabus: "",
+          pyq: "",
+          resource: "",
+          paragraph: "lorem30",
+        },
+        {
+          id: 25,
+          title: "Soft Computing",
+          code: "BCS1705",
+          department: ["CSE", "IT"],
+          semester: "Sixth",
+          image:
+            "https://drive.google.com/thumbnail?id=1M9raKaT1-gHgMIxptghlFjzgOv6_6ZRd",
+          notes:
+            "https://drive.google.com/file/d/142U4HPkbf165H2oWolMEhnPKF6NGGRZa/view?usp=drive_link",
+          syllabus: "",
+          pyq: "",
+          resource: "",
+          paragraph: "lorem30",
+        },
+        {
+          id: 27,
+          title: "Software Engineering",
+          code: "SE209",
+          department: ["CSE"],
+          semester: "Sixth",
+          image:
+            "https://drive.google.com/thumbnail?id=13f138GJWThD5XNEnyK1YDviTeW19omeW",
+          notes:
+            "https://drive.google.com/drive/folders/100sce6qxC79lJ29bYNaRtKcxf4Kp3yUT?usp=drive_link",
+          syllabus: "",
+          pyq: "",
+          resource: "",
+          paragraph: "lorem30",
+        },
+        {
+          id: 29,
+          title: "Organisational Behaviour",
+          code: "OB209",
+          department: [
+            "CSE",
+            "IT",
+            "ME",
+            "EE",
+            "EnI",
+            "AIR",
+            "CE",
+            "BT",
+            "MnC",
+            "Phy",
+            "Chem",
+          ],
+          semester: "Fourth",
+          image:
+            "https://drive.google.com/thumbnail?id=1CPqzzBXQTqJnE-ic3IQi764yQl2xobkz",
+          notes:
+            "https://drive.google.com/drive/folders/14Yzxk6734R5Do-nMHimAQFpqZqGmiJA_?usp=drive_link",
+          syllabus: "",
+          pyq: "",
+          resource: "",
+          paragraph: "lorem30",
+        },
+      ];
+
+      function filterSubjects(department, semester, subject) {
+        return subjects.filter(
+          (s) =>
+            (!department || s.department.includes(department)) &&
+            (!semester || s.semester === semester) &&
+            (!subject ||
+              s.title.toLowerCase().includes(subject.toLowerCase()) ||
+              s.code.toLowerCase().includes(subject.toLowerCase()))
+        );
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const departmentInput = document.getElementById("department-input");
+        const semesterInput = document.getElementById("semester-input");
+        const subjectInput = document.getElementById("subject-input");
+        const subjectCards = document.getElementById("subject-cards");
+
+        function renderCards() {
+          const filtered = filterSubjects(
+            departmentInput.value,
+            semesterInput.value,
+            subjectInput.value
+          );
+          subjectCards.innerHTML = filtered
+            .map(
+              (s) => `
+              <div class="flex flex-col justify-between border bg-white rounded-lg shadow-lg overflow-hidden h-auto w-11/12" data-aos="zoom-in-up">
+                <div class="p-4">
+                  <div class="w-full h-52 flex justify-center">
+                    <img src="${s.image}" alt="${s.title}" class="object-contain" />
+                  </div>
+                  <h2 class="text-lg font-semibold mb-2 text-center">${s.title}</h2>
+                  <p class="text-sm text-gray-600 text-center">${s.code}</p>
+                  <button class="w-full mt-4 bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 explore-btn" data-subject-id="${s.id}">
+                    Explore
+                  </button>
+                </div>
+              </div>
+              `
+            )
+            .join("");
+
+          // Attach events to the "Explore" buttons
+          const exploreButtons = document.querySelectorAll(".explore-btn");
+          exploreButtons.forEach((button) => {
+            button.addEventListener("click", (e) => {
+              const subjectId = e.target.getAttribute("data-subject-id");
+              const subject = subjects.find((s) => s.id == subjectId);
+              renderSubjectPage(subject);
+            });
+          });
+        }
+
+        departmentInput.addEventListener("change", renderCards);
+        semesterInput.addEventListener("change", renderCards);
+        subjectInput.addEventListener("input", renderCards);
+
+        function renderSubjectPage(subject) {
+          document.body.innerHTML = `
+            <class="p-4">
+              <button id="back-button" class="bg-gray-300 px-4 py-2 rounded-md hover:bg-gray-400 mb-4">
+                Back
+              </button>
+              <h1 class="text-4xl font-bold mb-8 text-center">${subject.title}</h1>
+              <div class="flex flex-wrap justify-center gap-6 mb-8 mt-10">
+                <button class="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 shadow-xl w-full sm:w-auto text-lg">
+                  <a href="${subject.notes}" target="_blank">Handwritten Notes</a>
+                </button>
+                <button class="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 shadow-xl w-full sm:w-auto text-lg">
+                  <a href="${subject.syllabus}" target="_blank">Syllabus</a>
+                </button>
+                <button class="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 shadow-xl w-full sm:w-auto text-lg">
+                  <a href="${subject.pyq}" target="_blank">PYQs</a>
+                </button>
+                <button class="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 shadow-xl w-full sm:w-auto text-lg">
+                  <a href="${subject.resource}" target="_blank">Resources</a>
+                </button>
+              </div>
+              <!-- About Section -->
+              <div class="bg-white p-6 shadow-md rounded-lg text-center max-w-4xl mx-auto">
+                <h2 class="text-2xl font-semibold mb-4">About ${subject.title}</h2>
+                <p class="text-gray-600 leading-relaxed"> ${subject.paragraph}</p>
+              </div>
+            </div>
+          `;
+
+          document
+            .getElementById("back-button")
+            .addEventListener("click", () => {
+              window.location.reload(); // Refresh the page to go back to the main subject page
+            });
+        }
+
+        // Initially render the full list of subjects
+        renderCards();
+      });
+    </script>
+    <!-- AOS Initialize -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        duration: 1000,
+        easing: "ease-in-out",
+      });
+    </script>
+
+
+
+    <!-- Footer Section -->
+    <footer
+      class="bg-purple-700 text-center py-12 flex flex-col gap-4 rounded-t-[25%] mt-6"
+      data-aos="fade-up"
+    >
+      <div class="flex justify-center items-center gap-4">
+        <div class="relative flex items-center justify-center">
+          <div
+            class="w-12 h-12 bg-[#a77deb] rotate-45 absolute rounded-sm animate-pulse shadow-lg"
+          ></div>
+          <h4
+            id="footer-logo"
+            class="relative ml-4 text-4xl font-bold tracking-wider text-white"
+          >
+            EduPulse
+          </h4>
+        </div>
+        <div class="w-[4px] h-16 bg-white ml-6"></div>
+        <span class="text-md text-white font-bold">New Era of learning</span>
+      </div>
+      <div class="mt-4">
+        <h5 class="text-white text-md font-bold mb-2">
+          Contact Us for any kind of query
+        </h5>
+        <div class="flex justify-center">
+          <input
+            type="text"
+            id="footer-search"
+            class="border border-white bg-transparent px-4 py-2 rounded text-sm text-white mr-4 placeholder-white font-bold"
+            placeholder="Your message"
+          />
+          <button
+            class="bg-white shadow-lg px-4 py-2 rounded text-purple-900 font-bold text-xl"
+          >
+            Send
+          </button>
+        </div>
+      </div>
+      <div>
+        <p class="text-white font-bold text-md mt-4">
+          © 2024 EduPulse. All rights reserved.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
